@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "156374383715",
+    "project_id": "paliwalmess-42e50",
+    "storage_bucket": "paliwalmess-42e50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156374383715:android:1748ed9846cec10ee0cc56",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFXoBN6R3X6qp2Sjka7C5lidyGKBDvNi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
