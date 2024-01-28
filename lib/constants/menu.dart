@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key});
@@ -42,8 +44,7 @@ class _MenuState extends State<Menu> {
         height: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-                'assets/background_cooption.jpg'), // Replace with your image path
+            image: AssetImage('assets/background_cooption.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -51,8 +52,8 @@ class _MenuState extends State<Menu> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.height * 0.6,
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.9,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
                 boxShadow: [
@@ -72,17 +73,29 @@ class _MenuState extends State<Menu> {
                       return Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError || snapshot.data == null) {
                       return Center(
-                          child: Text(
-                        'Error loading image',
-                        style: TextStyle(
+                        child: Text(
+                          'Error loading image',
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 25),
-                      ));
+                            fontSize: 25,
+                          ),
+                        ),
+                      );
                     } else {
-                      return Image.network(
-                        snapshot.data!,
-                        fit: BoxFit.cover,
+                      return PhotoViewGallery.builder(
+                        itemCount: 1,
+                        builder: (context, index) {
+                          return PhotoViewGalleryPageOptions(
+                            imageProvider: NetworkImage(snapshot.data!),
+                            minScale: PhotoViewComputedScale.contained * 0.8,
+                            maxScale: PhotoViewComputedScale.covered * 2,
+                          );
+                        },
+                        backgroundDecoration: BoxDecoration(
+                          color: Colors.black,
+                        ),
+                        pageController: PageController(),
                       );
                     }
                   },

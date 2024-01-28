@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^2.24.2  
   google_sign_in: ^6.2.1
   cloud_firestore: ^4.14.0
+  photo_view:
   
 
 dev_dependencies:
@@ -53,7 +54,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
 flutter_icons:
   android: true
-  image_path: "assets/Canteen.png"  
+  image_path: "assets/playstore.png"  
 
 
 # For information on the generic Dart part of this file, see the
