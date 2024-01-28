@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ContactSecureAdmin extends StatefulWidget {
-  const ContactSecureAdmin({super.key});
+  const ContactSecureAdmin({Key? key}) : super(key: key);
 
   @override
   State<ContactSecureAdmin> createState() => _ContactSecureAdminState();
@@ -49,17 +49,29 @@ class _ContactSecureAdminState extends State<ContactSecureAdmin> {
                   );
                 }
 
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for (DocumentSnapshot document in snapshot.data!.docs)
-                          _buildCommitteeMemberTile(document),
-                      ],
+                return Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    // Background Image
+                    Image.asset(
+                      'assets/background_cooption.jpg',
+                      fit: BoxFit.cover,
                     ),
-                  ),
+                    // Content
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (DocumentSnapshot document
+                                in snapshot.data!.docs)
+                              _buildCommitteeMemberTile(document),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
             );

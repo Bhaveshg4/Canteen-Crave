@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TakeInput extends StatefulWidget {
-  const TakeInput({super.key});
+  const TakeInput({Key? key}) : super(key: key);
 
   @override
   State<TakeInput> createState() => _TakeInputState();
@@ -27,55 +27,67 @@ class _TakeInputState extends State<TakeInput> {
         title: const Text("Feedbacks"),
         backgroundColor: Color.fromARGB(255, 243, 36, 36),
       ),
-      body: FutureBuilder(
-        future: _initialization,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return StreamBuilder(
-              stream: _feedbackData.snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Background Image
+          Image.asset(
+            'assets/background_cooption.jpg', // Set your background image asset
+            fit: BoxFit.cover,
+          ),
+          // Content
+          FutureBuilder(
+            future: _initialization,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return StreamBuilder(
+                  stream: _feedbackData.snapshots(),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
 
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      'Error: ${snapshot.error}',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  );
-                }
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          'Error: ${snapshot.error}',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      );
+                    }
 
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for (DocumentSnapshot document in snapshot.data!.docs)
-                          _buildFeedbackTile(document),
-                      ],
-                    ),
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (DocumentSnapshot document
+                                in snapshot.data!.docs)
+                              _buildFeedbackTile(document),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    'Error initializing Firebase: ${snapshot.error}',
+                    style: TextStyle(color: Colors.red),
                   ),
                 );
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                'Error initializing Firebase: ${snapshot.error}',
-                style: TextStyle(color: Colors.red),
-              ),
-            );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
+        ],
       ),
     );
   }
