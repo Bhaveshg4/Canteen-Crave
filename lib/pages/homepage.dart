@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constants/addthali.dart';
+import 'package:flutter_application_1/constants/developer.dart';
 import 'package:flutter_application_1/constants/feedback.dart';
 import 'package:flutter_application_1/constants/menu.dart';
 import 'package:flutter_application_1/constants/messCommittee.dart';
@@ -143,6 +144,13 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Developer()));
+                },
+                child: const Text("See Developer's Info"))
           ],
         ),
       ),
